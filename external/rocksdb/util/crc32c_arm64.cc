@@ -10,7 +10,8 @@
 #if defined(__linux__)
 #include <asm/hwcap.h>
 #endif
-#include <sys/auxv.h>
+// #include <sys/auxv.h>
+#include <stdint.h>
 #ifndef HWCAP_CRC32
 #define HWCAP_CRC32 (1 << 7)
 #endif
@@ -34,10 +35,24 @@
 } while(0)
 #endif
 
-uint32_t crc32c_runtime_check(void) {
-  uint64_t auxv = getauxval(AT_HWCAP);
-  return (auxv & HWCAP_CRC32) != 0;
+// uint32_t crc32c_runtime_check(void) {
+//  uint64_t auxv = getauxval(AT_HWCAP);
+//  return (auxv & HWCAP_CRC32) != 0;
+//}
+static inline int has_crc32c() {
+    // ARM64 doesn't have a direct instruction for CRC32C feature check.
+    // Instead, we can use a runtime check based on the architecture version.
+    // ARMv8.1 introduced CRC32C instruction support.
+    // Check for ARMv8.1 or later.
+    uint64_t id_aa64isar0;
+    __asm__ __volatile__("mrs %0, id_aa64isar0_el1" : "=r" (id_aa64isar0));
+    return ((id_aa64isar0 >> 24) & 0xf) >= 1; // Check for CRC32 instruction support
 }
+
+uint32_t crc32c_runtime_check(void) {
+    return has_crc32c();
+}
+
 
 uint32_t crc32c_arm64(uint32_t crc, unsigned char const *data,
                              unsigned len) {
