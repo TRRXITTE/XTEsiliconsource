@@ -9,6 +9,7 @@
 #include "pch.h"
 #include "config.h"
 #include "misc.h"
+#include <arm_acle.h>
 
 #if (CRYPTOPP_SSE42_AVAILABLE)
 # include <nmmintrin.h>

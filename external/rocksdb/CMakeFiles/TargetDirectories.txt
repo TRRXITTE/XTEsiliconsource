@@ -1,0 +1,9 @@
+/Users/traaitt/traaitt/external/rocksdb/CMakeFiles/build_version.dir
+/Users/traaitt/traaitt/external/rocksdb/CMakeFiles/rocksdb-shared.dir
+/Users/traaitt/traaitt/external/rocksdb/CMakeFiles/rocksdb.dir
+/Users/traaitt/traaitt/external/rocksdb/CMakeFiles/edit_cache.dir
+/Users/traaitt/traaitt/external/rocksdb/CMakeFiles/rebuild_cache.dir
+/Users/traaitt/traaitt/external/rocksdb/CMakeFiles/list_install_components.dir
+/Users/traaitt/traaitt/external/rocksdb/CMakeFiles/install.dir
+/Users/traaitt/traaitt/external/rocksdb/CMakeFiles/install/local.dir
+/Users/traaitt/traaitt/external/rocksdb/CMakeFiles/install/strip.dir

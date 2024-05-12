@@ -468,7 +468,7 @@ static bool isAltiVec() {
 }
 #endif
 
-#if defined(__linux__) && defined(HAVE_ARM64_CRC)
+#if defined(HAVE_ARM64_CRC)
 uint32_t ExtendARMImpl(uint32_t crc, const char *buf, size_t size) {
   return crc32c_arm64(crc, (const unsigned char *)buf, size);
 }
@@ -488,7 +488,7 @@ std::string IsFastCrc32Supported() {
   has_fast_crc = false;
   arch = "PPC";
 #endif
-#elif defined(__linux__) && defined(HAVE_ARM64_CRC)
+#elif defined(HAVE_ARM64_CRC)
   if (crc32c_runtime_check()) {
     has_fast_crc = true;
     arch = "Arm64";
@@ -497,7 +497,7 @@ std::string IsFastCrc32Supported() {
     arch = "Arm64";
   }
 #else
-  has_fast_crc = isSSE42();
+  has_fast_crc = false;
   arch = "x86";
 #endif
   if (has_fast_crc) {
@@ -1220,15 +1220,15 @@ uint32_t crc32c_3way(uint32_t crc, const char* buf, size_t len) {
 static inline Function Choose_Extend() {
 #ifdef HAVE_POWER8
   return isAltiVec() ? ExtendPPCImpl : ExtendImpl<Slow_CRC32>;
-#elif defined(__linux__) && defined(HAVE_ARM64_CRC)
+#elif defined(HAVE_ARM64_CRC)
   if(crc32c_runtime_check()) {
     return ExtendARMImpl;
   } else {
     return ExtendImpl<Slow_CRC32>;
   }
 #else
-  if (isSSE42()) {
-    if (isPCLMULQDQ()) {
+  if (false) {
+    if (false) {
 #if defined HAVE_SSE42  && defined HAVE_PCLMUL && !defined NO_THREEWAY_CRC32C
       return crc32c_3way;
 #else
